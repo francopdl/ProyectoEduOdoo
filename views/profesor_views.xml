@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_profesor_tree" model="ir.ui.view">
+            <field name="name">gestion_academy.profesor.tree</field>
+            <field name="model">gestion_academy.profesor</field>
+            <field name="arch" type="xml">
+                <list string="Profesores">
+                    <field name="nombre"/>
+                    <field name="email"/>
+                    <field name="estado"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_profesor_form" model="ir.ui.view">
+            <field name="name">gestion_academy.profesor.form</field>
+            <field name="model">gestion_academy.profesor</field>
+            <field name="arch" type="xml">
+                <form string="Profesor">
+                    <sheet>
+                        <group>
+                            <field name="nombre"/>
+                            <field name="apellidos"/>
+                            <field name="email"/>
+                            <field name="estado"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_profesor" model="ir.actions.act_window">
+            <field name="name">Profesores</field>
+            <field name="res_model">gestion_academy.profesor</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_profesor" name="Profesores" action="action_profesor" parent="menu_gestion_academy_root"/>
+    </data>
+</odoo>

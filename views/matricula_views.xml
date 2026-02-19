@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Tree View para Matrícula -->
+        <record id="view_matricula_tree" model="ir.ui.view">
+            <field name="name">gestion_academy.matricula.tree</field>
+            <field name="model">gestion_academy.matricula</field>
+            <field name="arch" type="xml">
+                <list string="Matrículas">
+                    <field name="alumno_id"/>
+                    <field name="sesion_id"/>
+                    <field name="estado"/>
+                    <field name="precio"/>
+                    <field name="fecha_pago"/>
+                    <field name="fecha_creacion"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Kanban View para Matrícula -->
+        <record id="view_matricula_kanban" model="ir.ui.view">
+            <field name="name">gestion_academy.matricula.kanban</field>
+            <field name="model">gestion_academy.matricula</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="estado" quick_create="False">
+                    <field name="estado"/>
+                    <field name="alumno_id"/>
+                    <field name="sesion_id"/>
+                    <field name="precio"/>
+                    <field name="fecha_pago"/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_kanban_title">
+                                    <strong><field name="alumno_id"/></strong>
+                                </div>
+                                <div class="oe_kanban_content">
+                                    <p><field name="sesion_id"/></p>
+                                    <p><field name="precio"/> USD</p>
+                                    <p class="o_text_muted"><field name="fecha_pago"/></p>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Form View para Matrícula -->
+        <record id="view_matricula_form" model="ir.ui.view">
+            <field name="name">gestion_academy.matricula.form</field>
+            <field name="model">gestion_academy.matricula</field>
+            <field name="arch" type="xml">
+                <form string="Matrícula">
+                    <header>
+                        <button name="action_confirmar" string="Confirmar" type="object" invisible="[('estado', '!=', 'borrador')]" class="btn-primary"/>
+                        <button name="action_pagar" string="Marcar Pagada" type="object" invisible="[('estado', '!=', 'confirmada')]" class="btn-success"/>
+                        <button name="action_cancelar" string="Cancelar" type="object" invisible="[('estado', 'not in', ['borrador', 'confirmada'])]"/>
+                        <field name="estado" widget="statusbar" statusbar_visible="borrador,confirmada,pagada,cancelada"/>
+                    </header>
+                    <sheet>
+                        <!-- Información de la matrícula -->
+                        <group string="Información de Matrícula">
+                            <field name="alumno_id"/>
+                            <field name="sesion_id"/>
+                            <field name="nombre" readonly="1"/>
+                        </group>
+                        
+                        <!-- Información de pago -->
+                        <group string="Información de Pago">
+                            <field name="precio" readonly="1"/>
+                            <field name="metodo_pago"/>
+                            <field name="fecha_pago"/>
+                            <field name="referencia_pago"/>
+                        </group>
+                        
+                        <!-- Auditoría -->
+                        <group string="Información de Auditoría">
+                            <field name="fecha_creacion" readonly="1"/>
+                            <field name="fecha_actualizacion" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Search View para Matrícula -->
+        <record id="view_matricula_search" model="ir.ui.view">
+            <field name="name">gestion_academy.matricula.search</field>
+            <field name="model">gestion_academy.matricula</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Matrículas">
+                    <field name="alumno_id"/>
+                    <field name="sesion_id"/>
+                    <field name="estado"/>
+                    <separator/>
+                    <filter string="Borrador" name="filter_borrador" domain="[('estado', '=', 'borrador')]"/>
+                    <filter string="Confirmadas" name="filter_confirmada" domain="[('estado', '=', 'confirmada')]"/>
+                    <filter string="Pagadas" name="filter_pagada" domain="[('estado', '=', 'pagada')]"/>
+                    <filter string="Canceladas" name="filter_cancelada" domain="[('estado', '=', 'cancelada')]"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action para Matrícula -->
+        <record id="action_matricula" model="ir.actions.act_window">
+            <field name="name">Matrículas</field>
+            <field name="res_model">gestion_academy.matricula</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="search_view_id" ref="view_matricula_search"/>
+        </record>
+
+        <!-- Menu Item para Matrícula -->
+        <menuitem id="menu_matricula" name="Matrículas" action="action_matricula" parent="menu_gestion_academy_root"/>
+    </data>
+</odoo>

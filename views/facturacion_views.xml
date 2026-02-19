@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_facturacion_tree" model="ir.ui.view">
+            <field name="name">gestion_academy.facturacion.tree</field>
+            <field name="model">gestion_academy.facturacion</field>
+            <field name="arch" type="xml">
+                <list string="Facturas">
+                    <field name="numero_factura"/>
+                    <field name="alumno_id"/>
+                    <field name="cantidad"/>
+                    <field name="estado_pago"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_facturacion_form" model="ir.ui.view">
+            <field name="name">gestion_academy.facturacion.form</field>
+            <field name="model">gestion_academy.facturacion</field>
+            <field name="arch" type="xml">
+                <form string="Factura">
+                    <sheet>
+                        <group>
+                            <field name="numero_factura"/>
+                            <field name="alumno_id"/>
+                        </group>
+                        <group>
+                            <field name="curso_id"/>
+                            <field name="cantidad"/>
+                        </group>
+                        <group>
+                            <field name="fecha_factura"/>
+                            <field name="concepto"/>
+                            <field name="estado_pago"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_facturacion" model="ir.actions.act_window">
+            <field name="name">Facturas</field>
+            <field name="res_model">gestion_academy.facturacion</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem id="menu_facturacion" name="Facturación" action="action_facturacion" parent="menu_gestion_academy_root"/>
+    </data>
+</odoo>

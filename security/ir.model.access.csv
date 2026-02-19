@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_curso_user,acceso_curso_usuario,model_gestion_academy_curso,base.group_user,1,1,1,0
+access_curso_manager,acceso_curso_gerente,model_gestion_academy_curso,base.group_system,1,1,1,1
+access_profesor_user,acceso_profesor_usuario,model_gestion_academy_profesor,base.group_user,1,1,1,0
+access_profesor_manager,acceso_profesor_gerente,model_gestion_academy_profesor,base.group_system,1,1,1,1
+access_alumno_user,acceso_alumno_usuario,model_gestion_academy_alumno,base.group_user,1,1,1,0
+access_alumno_manager,acceso_alumno_gerente,model_gestion_academy_alumno,base.group_system,1,1,1,1
+access_sesion_user,acceso_sesion_usuario,model_gestion_academy_sesion,base.group_user,1,1,1,0
+access_sesion_manager,acceso_sesion_gerente,model_gestion_academy_sesion,base.group_system,1,1,1,1
+access_clase_user,acceso_clase_usuario,model_gestion_academy_clase,base.group_user,1,1,1,0
+access_clase_manager,acceso_clase_gerente,model_gestion_academy_clase,base.group_system,1,1,1,1
+access_facturacion_user,acceso_facturacion_usuario,model_gestion_academy_facturacion,base.group_user,1,0,0,0
+access_facturacion_manager,acceso_facturacion_gerente,model_gestion_academy_facturacion,base.group_system,1,1,1,1
+access_matricula_user,acceso_matricula_usuario,model_gestion_academy_matricula,base.group_user,1,1,1,0
+access_matricula_manager,acceso_matricula_gerente,model_gestion_academy_matricula,base.group_system,1,1,1,1

@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_sesion_tree" model="ir.ui.view">
+            <field name="name">gestion_academy.sesion.tree</field>
+            <field name="model">gestion_academy.sesion</field>
+            <field name="arch" type="xml">
+                <list string="Sesiones">
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                    <field name="fecha_inicio"/>
+                    <field name="asientos_ocupados"/>
+                    <field name="asientos_totales"/>
+                    <field name="porcentaje_ocupacion"/>
+                    <field name="estado"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_sesion_form" model="ir.ui.view">
+            <field name="name">gestion_academy.sesion.form</field>
+            <field name="model">gestion_academy.sesion</field>
+            <field name="arch" type="xml">
+                <form string="Sesión">
+                    <sheet>
+                        <!-- Información básica -->
+                        <group string="Información Básica">
+                            <field name="curso_id"/>
+                            <field name="profesor_id"/>
+                            <field name="fecha_inicio"/>
+                            <field name="duracion_minutos"/>
+                            <field name="fecha_fin" readonly="1"/>
+                            <field name="estado"/>
+                        </group>
+                        
+                        <!-- Capacidad y Ocupación -->
+                        <group string="Capacidad y Ocupación">
+                            <field name="asientos_totales"/>
+                            <field name="asientos_ocupados" readonly="1"/>
+                            <field name="asientos_disponibles" readonly="1"/>
+                            <field name="porcentaje_ocupacion" readonly="1"/>
+                            <field name="color_ocupacion" readonly="1"/>
+                        </group>
+                        
+                        <!-- ProgressBar de ocupación -->
+                        <group string="Indicador de Ocupación">
+                            <div class="o_progressbar_container">
+                                <field name="porcentaje_ocupacion" widget="progressbar" title="Ocupación de la sesión"/>
+                            </div>
+                        </group>
+                        
+                        <!-- Ubicación y descripción -->
+                        <group>
+                            <field name="ubicacion"/>
+                            <field name="descripcion"/>
+                        </group>
+                        
+                        <!-- Alumnos asistentes -->
+                        <group string="Alumnos Asistentes">
+                            <field name="alumnos_asistentes_ids" nolabel="1"/>
+                        </group>
+                        
+                        <!-- Material y notas -->
+                        <group>
+                            <field name="material_recursos"/>
+                            <field name="notas"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Calendario View para Sesiones -->
+        <record id="view_sesion_calendar" model="ir.ui.view">
+            <field name="name">gestion_academy.sesion.calendar</field>
+            <field name="model">gestion_academy.sesion</field>
+            <field name="arch" type="xml">
+                <calendar string="Calendario de Sesiones" date_start="fecha_inicio">
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                </calendar>
+            </field>
+        </record>
+
+        <!-- Kanban View para Sesiones (por estado) -->
+        <record id="view_sesion_kanban" model="ir.ui.view">
+            <field name="name">gestion_academy.sesion.kanban</field>
+            <field name="model">gestion_academy.sesion</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="estado" quick_create="False">
+                    <field name="estado"/>
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                    <field name="asientos_ocupados"/>
+                    <field name="asientos_totales"/>
+                    <progressbar field="estado" colors='{"programada": "light-primary", "en_curso": "light-warning", "completada": "light-success", "cancelada": "light-danger", "pospuesta": "light-secondary"}'/>
+                    <templates>
+                        <t t-name="card">
+                            <div class="oe_kanban_card">
+                                <div class="oe_kanban_card_header">
+                                    <strong><field name="curso_id"/></strong>
+                                </div>
+                                <div class="oe_kanban_card_body">
+                                    <div class="oe_kanban_details">
+                                        <ul>
+                                            <li>
+                                                <strong>Profesor:</strong> <field name="profesor_id"/>
+                                            </li>
+                                            <li>
+                                                <strong>Asientos Ocupados:</strong> <field name="asientos_ocupados"/>/<field name="asientos_totales"/>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+       
+        <record id="view_sesion_search" model="ir.ui.view">
+            <field name="name">gestion_academy.sesion.search</field>
+            <field name="model">gestion_academy.sesion</field>
+            <field name="arch" type="xml">
+                <search string="Buscar Sesiones">
+                    <field name="curso_id"/>
+                    <field name="profesor_id"/>
+                    <field name="estado"/>
+                    <separator/>
+                    <filter string="Programadas" name="filter_programada" domain="[('estado', '=', 'programada')]"/>
+                    <filter string="En Curso" name="filter_en_curso" domain="[('estado', '=', 'en_curso')]"/>
+                    <filter string="Completadas" name="filter_completada" domain="[('estado', '=', 'completada')]"/>
+                    <filter string="Canceladas" name="filter_cancelada" domain="[('estado', '=', 'cancelada')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_sesion" model="ir.actions.act_window">
+            <field name="name">Sesiones</field>
+            <field name="res_model">gestion_academy.sesion</field>
+            <field name="view_mode">calendar,kanban,list,form</field>
+            <field name="search_view_id" ref="view_sesion_search"/>
+        </record>
+
+        <menuitem id="menu_sesion" name="Sesiones" action="action_sesion" parent="menu_gestion_academy_root"/>
+    </data>
+</odoo>

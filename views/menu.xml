@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="menu_gestion_academy_root" name="Gestión Academia" sequence="1"/>
+    </data>
+</odoo>
